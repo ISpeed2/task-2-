@@ -1,12 +1,12 @@
-﻿#ifndef FILESYSTEMSTORAGE_H
-#define FILESYSTEMSTORAGE_H
+﻿#ifndef ZIPFILESYSTEMSTORAGE_H
+#define ZIPFILESYSTEMSTORAGE_H
 
 #include "Storage.h"
 #include <string>
 
-class FileSystemStorage : public Storage {
+class ZipFileSystemStorage : public Storage {
 public:
-    FileSystemStorage(const std::string& baseDirectory);
+    ZipFileSystemStorage(const std::string& baseDirectory);
     std::string save(const std::string& data, const std::string& objectName) override;
 
 private:

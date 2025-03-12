@@ -16,6 +16,8 @@ RestorePoint SplitStorageAlgorithm::createRestorePoint(const std::vector<BackupO
     // Create the restore point directory inside the storage location
     std::string restorePointPath = storage->save("", restorePointDirName); // Pass an empty string to create a directory
 
+    std::vector<std::string> filesInRestorePoint; // Create a list to store the filenames
+
     for (const auto& object : objects) {
         std::ifstream inputFile(object.getPath(), std::ios::binary);
         if (!inputFile.is_open()) {
@@ -33,7 +35,8 @@ RestorePoint SplitStorageAlgorithm::createRestorePoint(const std::vector<BackupO
         if (objectDirectoryPath.empty()) {
             throw CouldNotSaveFile(restorePointPath + "/" + objectFileName);
         }
+        filesInRestorePoint.push_back(objectFileName); // Add the filename to the list
     }
 
-    return RestorePoint(now, restorePointPath);
+    return RestorePoint(now, restorePointPath, filesInRestorePoint); // Pass the list to the constructor
 }

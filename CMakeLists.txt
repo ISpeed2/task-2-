@@ -3,6 +3,9 @@ project(backup_system)
 
 set(CMAKE_CXX_STANDARD 17)
 
+find_package(LibZip REQUIRED)
+include_directories(${LIBZIP_INCLUDE_DIR})
+
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}/BackupJob
@@ -18,10 +21,11 @@ add_executable(backup_system main.cpp
     BackupJob/BackupJob.cpp
     BackupObject/BackupObject.cpp
     RestorePoint/RestorePoint.cpp
-    Storage/Storage.cpp
     Storage/FileSystemStorage.cpp
-    BackupAlgorithm/BackupAlgorithm.cpp
+    Storage/ZipFileSystemStorage.cpp
     BackupAlgorithm/SplitStorageAlgorithm.cpp
+    BackupAlgorithm/SingleStorageAlgorithm.cpp # Added SingleStorageAlgorithm
     Exceptions/BackupException.cpp
     Utils/FileUtils.cpp
 )
+target_link_libraries(backup_system ${LIBZIP_LIBRARIES})
